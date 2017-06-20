@@ -1,0 +1,48 @@
+extends ../store_layout
+
+block content
+    .page-header
+        h3 {{ title }}
+        p.text-info
+            | ברוכים הבאים לשוק האורגני שלנו.
+            br
+            |     בנינו את האפליקציה על מנת לתת לכם שירות טוב יותר.
+            br
+            | נשמח לתת לכם את השירות הטוב ביותר אז אם יש דברים שכדאי שנדע, ספרו לנו ונשפר....
+        p
+            | חיפוש:&nbsp;
+            input(ng-model='search')
+    div(ng-controller='storeCtrl' ng-cloak)
+    table.table.table-bordered
+        tr.well
+            td.tdRight(colspan='4')
+                a(href='cart', title='לעגלת הקניות', ng-disabled='cart.getTotalCount() < 1')
+                    i.icon-shopping-cart.icon-2x.icon-flip-horizontal
+                    b &nbsp;{{cart.getTotalItemsCount()}}&nbsp;
+                    |  פריטים,&nbsp;
+                    b {{cart.getTotalCount()}}&nbsp;
+                    | ק"ג,&nbsp;
+                    b {{cart.getTotalPrice() | currency}}
+        tr(ng-repeat="product in products | orderBy:'name' | filter:search")
+            td.tdCenter
+                img(ng-src='img/products/{{product.sku}}.jpg', alt='{{product.name}}')
+            td.tdRight
+                a(href='/products/{{product.sku}}' ng-click='sku(product.sku)')
+                    b {{product.name}}
+                br
+                |             {{product.title}}
+            td.tdRight.price
+                | {{product.price | currency}}
+            td.tdCenter
+                button.btn.product.btn-primary(type='button', ng-click='cart.addItem(product.sku, product.name, product.price, 1)')
+                    | הוסף לעגלה
+        tr.well
+            td.tdRight(colspan='4')
+                a(href='cart', title='לעגלת הקניות', ng-disabled='cart.getTotalCount() < 1')
+                    i.icon-shopping-cart.icon-2x.icon-flip-horizontal
+                    b &nbsp;{{cart.getTotalItemsCount()}}&nbsp;
+                    |  פריטים,&nbsp;
+                    b {{cart.getTotalCount()}}&nbsp;
+                    | ק"ג,&nbsp;
+                    b {{cart.getTotalPrice() | currency}}
+    //input(type='hidden', name='_csrf', value=_csrf)

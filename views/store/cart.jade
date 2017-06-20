@@ -1,0 +1,87 @@
+extends ../store_layout
+
+block content
+    .page-header
+        h3 {{ title }}
+
+    p.text-info
+        | תודה רבה שקניתם אצלנו.
+        br
+        |     זוהי עגלת הקניות שלכם. כאן תוכלו להוסיף ולשנות את העגלה לפני התשלום,
+        br
+        |     לחזור לחנות להוספת פריטים או כל שינוי אחר.
+    div(ng-controller='cartCtrl' ng-cloak)
+    .container-fluid
+        .row-fluid
+            // buttons
+            .span4
+                p.text-info
+                    button.btn.btn-block(onclick="window.location.href='/store'")
+                        i.icon-chevron-right.icon-2x.icon-rotate-180
+                        | חזרה לחנות
+                    button.btn.btn-block.btn-danger(ng-click='cart.clearItems()', ng-disabled='cart.getTotalCount() < 1')
+                        i.icon-trash.icon-2x.icon-white
+                        | רוקן עגלה
+                br
+                br
+                p.text-info
+                    button.btn.btn-block.btn-primary(ng-click="cart.checkout('PayPal'); insertOrder('PayPal')", ng-disabled='cart.getTotalCount() < 1')
+                        i.icon-ok.icon-2x.icon-white
+                        | שלמו באמצעות פייפאל
+                    button.btn.btn-block.btn-primary(ng-click="cart.checkout('Google')", ng-disabled='cart.getTotalCount() < 1')
+                        i.icon-ok.icon-2x.icon-white
+                        | שלמו עם ארנק גוגל
+                br
+                p.text-info
+                    button.btn.btn-block.btn-link(ng-click="cart.checkout('PayPal')", ng-disabled='cart.getTotalCount() < 1')
+                        img(src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif', alt='checkout PayPal')
+                    button.btn.btn-block.btn-link(ng-click="cart.checkout('Google')", ng-disabled='cart.getTotalCount() < 1')
+                        img(src='https://www.google.com/accounts/smb_v1_logo_1_0.gif?w=168&h=44&style=white&variant=text', alt='checkoutGoogle')
+            .span8
+                // items
+                table.table.table-bordered
+                    // header
+                    tr.well
+                        td
+                            b פריט
+                        td.tdCenter
+                            b כמות
+                        td.tdCenter
+                            b מחיר לק"ג
+                        td.tdCenter
+                            b סה"כ מחיר
+                        td
+                    // empty cart message
+                    tr(ng-hide='cart.getTotalCount() > 0')
+                        td.tdCenter(colspan='4')
+                            | העגלה שלכם ריקה.
+                    // cart items
+                    tr(ng-repeat="item in cart.items | orderBy:'name'")
+                        td {{item.name}}
+                        td.tdCenter
+                            .input-append
+                                // use type=tel instead of  to prevent spinners
+                                input.span3.text-center(type='tel', ng-model='item.quantity', ng-change='cart.saveItems()' disabled)
+                                button.btn.btn-success(type='button', ng-disabled='item.quantity >= 10', ng-click='cart.addItem(item.sku, item.name, item.price, +0.5)') +
+                                button.btn.btn-inverse(type='button', ng-disabled='item.quantity <= 1', ng-click='cart.addItem(item.sku, item.name, item.price, -0.5)') -
+                        td.tdCenter {{item.price}}
+                        td.tdCenter {{item.price * item.quantity | currency}}
+                        td.tdCenter(title='הסר מהעגלה')
+                            a(href='', ng-click='cart.addItem(item.sku, item.name, item.price, -10000000)')
+                                i.icon-remove
+                                | הסר
+                    // footer
+                    tr.well
+                        td
+                            b סה"כ להזמנה
+                        td.tdCenter
+                            b {{cart.getTotalCount()}}&nbsp;ק"ג
+                        td
+                        td.tdCenter
+                            b {{cart.getTotalPrice() | currency}}
+                        td
+                    input(type='hidden', name='_csrf', value=_csrf)
+            .span8
+                if (products)
+                    each product in products
+                        script!= "(function() {var items = []; items = JSON.parse(localStorage.getItem('Store_items')); var len=items.length, currentItem=" + JSON.stringify(product) + ", index=null; for(var i=0; i <len; i++){if(items[i].sku==currentItem.sku){index=i;break;}};if(index!==null){items[index].quantity+=currentItem.quantity;}else{items.push(" + JSON.stringify(product) + ")}; localStorage.setItem('Store_items', JSON.stringify(items));  })();"

@@ -1,0 +1,38 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+*.map
+*.js.map
+*.min.js
+*compiled.js
+pids
+logs
+results
+tmp
+
+# API keys and secrets
+#.env
+#.env.configs
+
+# Dependency directory
+/node_modules/
+bower_components
+
+# Editors
+.idea
+*.iml
+
+# OS metadata
+.DS_Store
+Thumbs.db
+._git_/branches/
+._git_/objects/info/
+._git_/refs/tags/
+/uploads/
+/.env.configs

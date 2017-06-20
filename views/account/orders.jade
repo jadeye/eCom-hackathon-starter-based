@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+    .page-header
+        h3 ההזמנות שלי
+        div(ng-controller='orderCtrl' ng-cloak)
+            .container-fluid
+                .row-fluid
+                    table.table.table-bordered
+                        thead
+                            tr פירוט הזמנות
+                        tbody
+                            each order in orders
+                                tr
+                                    td.tdRight= moment(order.paymentTrans.timestampSent).format('DD.MM.YYY')
+                                    td.tdCenter.price= order.totalPerOrder
+                                    td.tdLeft= order.paymentTrans.serviceName
+                                    td.tdCenter
+                                        button.btn.product.btn-primary(type='button', id=order._id class='shownextrow')
+                                            | פירוט
+                                //div#effect(class="ui-widget-content ui-corner-all")
+                                tr(class="details"+order._id, style="font-weight: 600;font-size: 1.2em;color: hsl(195, 100%, 50%);background-color: hsl(0, 68%, 42%);display: none;bac")
+                                    td.tdRight= 'מוצר'
+                                    td.tdCenter= 'מחיר ליחידה'
+                                    td.tdCenter= 'כמות'
+                                    td.tdLeft= 'סך הכל למוצר'
+                                for prod in order.productOrder
+                                    tr(class="details"+order._id, style="display: none;")
+                                        td.tdRight= prod.name
+                                        td.tdCenter= prod.price
+                                        td.tdCenter= prod.quantity
+                                        td.tdLeft= prod.total
+                                //tr.show.hidden
+
+                                br

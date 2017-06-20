@@ -1,0 +1,54 @@
+extends ../layout
+
+block content
+    .page-header
+        h3 ההזמנות שלי
+        div(ng-controller='cartCtrl' ng-cloak)
+            .container-fluid
+                .row-fluid
+                    table.table.table-bcarted
+                        thead
+                            tr
+                                td.tdRight
+                                    | תאריך
+                                td.tdRight
+                                    | שעה
+                                td.tdCenter
+                                    | סה"כ להזמנה
+                                td.tdCenter
+                                    | אמצעי תשלום
+                                td.tdCenter
+                                    | אפשרויות
+                        tbody
+                            each cart in carts
+                                tr.broderTop
+                                    td.tdRight= moment(cart.paymentTrans[0].timestampSent).format('DD.MM.YYYY')
+                                    td.tdRight= moment(cart.paymentTrans[0].timestampSent).format('H:mm:ss')
+                                    td.tdCenter.price= cart.totalPerOrder
+                                    td.tdCenter= cart.paymentTrans[0].serviceName
+                                    td.tdCenter.btnWrap
+                                        button.btn.product.btn-primary(type='button', id=cart._id class='shownextrow')
+                                            | פירוט
+                                        form(method="post")
+                                            input(type="hidden" name="id" value=cart._id)
+                                            input(type='hidden', name='_csrf', value=_csrf)
+                                            button.btn.product.btn-primary(type='submit', id=cart._id class='')
+                                                | טען
+                                        button.btn.product.btn-primary
+                                            | שבועית
+                                            //button.btn.product.btn-primary(type='button', id=cart._id class='' onclick='pushCart("' + cart._id + '")')
+                                //div#effect(class="ui-widget-content ui-corner-all")
+                                tr(class="details"+cart._id, style="font-weight: 600;font-size: 1.2em;color: hsl(195, 100%, 50%);background-color: hsl(0, 68%, 42%);display: none;bac")
+                                    td.tdRight= 'מוצר'
+                                    td.tdCenter= 'מחיר ליחידה'
+                                    td.tdCenter= 'כמות'
+                                    td.tdCenter= 'סך הכל למוצר'
+                                for prod in cart.productOrder
+                                    tr(class="details"+cart._id, style="display: none;")
+                                        td.tdRight= prod.name
+                                        td.tdCenter= prod.price
+                                        td.tdCenter= prod.quantity
+                                        td.tdCenter= prod.total
+                                tr.show.hidden
+
+                                br

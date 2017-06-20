@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 הרשמה
+  form.form-horizontal(id='signup-form', name='signup-form', method='POST' lang='he')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='email') מייל
+      .col-sm-7
+        input.form-control(type='email', name='email', id='email', placeholder='מייל', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='password') סיסמה
+      .col-sm-7
+        input.form-control(type='password', name='password', id='password', placeholder='סיסמה', required)
+    .form-group
+      label.col-sm-3.control-label(for='confirmPassword') אישרור סיסמה
+      .col-sm-7
+        input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='אישרור סיסמה', required)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | הרשם

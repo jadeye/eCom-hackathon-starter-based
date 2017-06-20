@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 כניסה
+  form.form-horizontal(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='email') מייל
+      .col-sm-7
+        input.form-control(type='email', name='email', id='email', placeholder='מייל', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='password') סיסמה
+      .col-sm-7
+        input.form-control(type='password', name='password', id='password', placeholder='סיסמה', required)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.col-sm-3.btn.btn-primary(type='submit')
+          i.fa.fa-user
+          | כנס
+        a.btn.btn-link(href='/forgot') שכחתי סיסמה?
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        hr
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        a.btn.btn-block.btn-facebook.btn-social(href='/auth/facebook')
+          i.icon-facebook
+          | כניסה עם פייסבוק
+        a.btn.btn-block.btn-twitter.btn-social(href='/auth/twitter')
+          i.icon-twitter
+          | כניסה עם טוויטר
+        a.btn.btn-block.btn-google.btn-social(href='/auth/google')
+          i.icon-google-plus
+          | כניסה עם גוגל
+        a.btn.btn-block.btn-github.btn-social(href='/auth/github')
+          i.icon-github
+          | כניסה עם גיטהאב
+        a.btn.btn-block.btn-linkedin.btn-social(href='/auth/linkedin')
+          i.icon-linkedin
+          | כניסה עם לינקדין
+        a.btn.btn-block.btn-instagram.btn-social(href='/auth/instagram')
+          i.icon-instagram
+          | כניסה עם אינסטוש

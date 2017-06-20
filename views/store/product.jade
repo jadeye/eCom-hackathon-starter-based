@@ -1,0 +1,71 @@
+extends ../store_layout
+
+block content
+    .page-header
+        h3 {{ title }}
+
+    p.text-info
+        img(ng-src='/img/products/{{product.sku}}.jpg', alt='{{product.name}}')
+        |     {{product.name}}: {{product.title}}
+        br
+    div(ng-controller='productCtrl' ng-cloak)
+    .container-fluid
+        .row-fluid
+            .span8
+                //p.text-info
+                //    img(ng-src='/img/products/{{product.sku}}.jpg', alt='{{product.name}}')
+                //    |     {{product.name}}: {{product.title}}
+                //    br
+                // product info
+                table.table.table-bordered
+                    tr.well
+                        td.tdRight(colspan='3')
+                            a(href='/cart', title='go to shopping cart', ng-disabled='cart.getTotalCount() < 1')
+                                i.icon-shopping-cart.icon-2x.icon-flip-horizontal
+                                b &nbsp;{{cart.getTotalItemsCount()}}&nbsp;
+                                |  פריטים,&nbsp;
+                                b {{cart.getTotalCount()}}&nbsp;
+                                | ק"ג,&nbsp;
+                                b {{cart.getTotalPrice() | currency}}
+                                span(ng-show='cart.getTotalCount(product.sku) > 0')
+                                    br
+                                    | פריט זה נמצא בעגלה
+                    tr
+                        td.tdRight
+                            b קלוריות
+                        td.tdCenter
+                            h2 {{product.cal}}
+                        td
+                    tr(ng-repeat='(nutrientName, nutrientValue) in product.nutrients')
+                        td.tdRight
+                            b {{nutrientName}}
+                        td.tdCenter
+                            img(ng-src='/img/r{{nutrientValue}}.png', alt='{{nutrientValue}}')
+                        td
+                            b {{dvaCaption[nutrientValue]}}
+                            | :
+                            |                         {{dvaRange[nutrientValue]}}
+                            |                         מהמנה המומלצת היומית.
+                    tr.well
+                        td.tdRight(colspan='3')
+                            a(href='/cart', title='go to shopping cart', ng-disabled='cart.getTotalCount() < 1')
+                                i.icon-shopping-cart.icon-2x.icon-flip-horizontal
+                                b &nbsp;{{cart.getTotalItemsCount()}}&nbsp;
+                                |  פריטים,&nbsp;
+                                b {{cart.getTotalCount()}}&nbsp;
+                                | ק"ג,&nbsp;
+                                b {{cart.getTotalPrice() | currency}}
+                                span(ng-show='cart.getTotalCount(product.sku) > 0')
+                                    br
+                                    | פריט זה נמצא בעגלה
+            // buttons
+            .span4
+                button.btn.btn-block.btn-success(ng-click='cart.addItem(product.sku, product.name, product.price, 1)')
+                    i.icon-shopping-cart.icon-white
+                    | הוסף לעגלה
+                button.btn.btn-block.btn-danger(ng-click='cart.addItem(product.sku, product.name, product.price, -10000)', ng-disabled='cart.getTotalCount(product.sku) < 1')
+                    i.icon-trash.icon-white
+                    | הסר מעגלה
+                button.btn.btn-block(onclick="window.location.href='/store'")
+                    i.icon-chevron-left
+                    | חזור לחנות

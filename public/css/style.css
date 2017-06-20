@@ -1,0 +1,105 @@
+﻿/*!
+ * Extend Bootstrap v2.3.1 to provide cell alignment (doh)
+ *
+ */
+body {
+    direction: rtl;
+}
+.table td.tdRight {
+  text-align: right;
+}
+.table td.tdLeft {
+    text-align: left;
+}
+.table td.tdCenter {
+  text-align: center;
+}
+.table td.tdRight.price {
+    text-align: center;
+    vertical-align: middle;
+}
+.btn.product {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+.table-nonfluid {
+   width: auto;
+}
+
+.toggler {
+    width: 500px;
+    height: 200px;
+}
+
+/*
+ * icons & social btns
+ */
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    margin-left: 8px !important;
+}
+
+table a:not(.btn),
+.table a:not(.btn) {
+    text-decoration: none !important; font-size: 18px;}
+
+[class*=" fa-"]:before {
+    margin-left: 6px !important;
+}
+.icon-2x {
+    font-size: 1.6em !important;
+}
+.form-control, input {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+    vertical-align: middle;
+}
+
+.btn-social, .btn-social-icon {
+    text-align: right;
+    padding-right: 72px;
+}
+
+
+.btn-social > :first-child, .btn-social-icon > :first-child {
+    position: absolute;
+    right: 0;
+    width: 41px;
+    line-height: 43px;
+    font-size: 1.6em;
+    border-left: 1px solid hsla(0, 0%, 0%, 0.2);
+}
+
+@media (min-width: 1200px) {
+.row-fluid {
+    width: 72% !important;
+    margin: auto;
+}
+
+}
+
+.material-icons.orange600 { color: #FB8C00; }
+
+/*
+ * un-charged carts
+*/
+
+.broderTop {
+    border-top: thin solid;
+}
+
+.colSapn {
+    /*width:100%;*/
+    column-span: 2;
+}
+
+.btnWrap{
+    display: inline-flex;
+    text-align: center;
+    width: 100%;
+}
